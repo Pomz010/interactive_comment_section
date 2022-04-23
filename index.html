@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="./public/css/main.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  
+  <title>Frontend Mentor | Interactive comments section</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    .attribution { font-size: 11px; text-align: center; }
+    .attribution a { color: hsl(228, 45%, 44%); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <main class="app-container">
+      <section class="comments" id="comments-section">
+        <!-- <div class="__comment-container">
+          <div class="__comment">
+            <div class="__comment__info">
+              <span class="__comment__avatar">
+                <img src="./public/img/avatars/image-amyrobson.png" alt="">
+              </span>
+              <span class="__comment__username">
+                amyrobson
+              </span>
+              <span class="__comment__date">1 month ago</span>
+            </div>
+            <p class="__comment__content">Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You've nailed the design and the responsiveness at various breakpoints works really well.</p>
+            <div class="__comment__command">
+              <div class="__command__vote--btn --btn">
+                <button class="up-vote vote--btn"><i class="fa-solid fa-plus"></i></button>
+                <span class="vote-count">0</span>
+                <button class="down-vote vote--btn"><i class="fa-solid fa-minus"></i></button>
+              </div>
+              <button class="__command__reply--btn --btn">
+                <i class="fa-solid fa-reply"></i>
+                Reply
+              </button>
+            </div>
+          </div>
+
+          <div class="comment-reply">
+              <div class="__comment">
+                <div class="__comment__info">
+                  <span class="__comment__avatar">
+                    <img src="./public/img/avatars/image-amyrobson.png" alt="">
+                  </span>
+                  <span class="__comment__username">
+                    amyrobson
+                  </span>
+                  <span class="__comment__date">1 month ago</span>
+                </div>
+                <p class="__comment__content">Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You've nailed the design and the responsiveness at various breakpoints works really well.</p>
+                <div class="__comment__command">
+                  <div class="__command__vote--btn --btn">
+                    <button class="up-vote vote--btn"><i class="fa-solid fa-plus"></i></button>
+                    <span class="vote-count">0</span>
+                    <button class="down-vote vote--btn"><i class="fa-solid fa-minus"></i></button>
+                  </div>
+                  <button class="__command__reply--btn --btn">
+                    <i class="fa-solid fa-reply"></i>
+                    Reply
+                  </button>
+                </div>
+              </div>
+
+              <div class="__comment">
+                <div class="__comment__info">
+                  <span class="__comment__avatar">
+                    <img src="./public/img/avatars/image-amyrobson.png" alt="">
+                  </span>
+                  <span class="__comment__username">
+                    amyrobson
+                  </span>
+                  <span class="__comment__date">1 month ago</span>
+                </div>
+                <p class="__comment__content">Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You've nailed the design and the responsiveness at various breakpoints works really well.</p>
+                <div class="__comment__command">
+                  <div class="__command__vote--btn --btn">
+                    <button class="up-vote vote--btn"><i class="fa-solid fa-plus"></i></button>
+                    <span class="vote-count">0</span>
+                    <button class="down-vote vote--btn"><i class="fa-solid fa-minus"></i></button>
+                  </div>
+                  <button class="__command__reply--btn --btn">
+                    <i class="fa-solid fa-reply"></i>
+                    Reply
+                  </button>
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="__comment-container">
+          <div class="__comment">
+            <div class="__comment__info">
+              <span class="__comment__avatar">
+                <img src="./public/img/avatars/image-amyrobson.png" alt="">
+              </span>
+              <span class="__comment__username">
+                amyrobson
+              </span>
+              <span class="__comment__date">1 month ago</span>
+            </div>
+            <p class="__comment__content">Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You've nailed the design and the responsiveness at various breakpoints works really well.</p>
+            <div class="__comment__command">
+              <div class="__command__vote--btn --btn">
+                <button class="up-vote vote--btn"><i class="fa-solid fa-plus"></i></button>
+                <span class="vote-count">0</span>
+                <button class="down-vote vote--btn"><i class="fa-solid fa-minus"></i></button>
+              </div>
+              <button class="__command__reply--btn --btn">
+                <i class="fa-solid fa-reply"></i>
+                Reply
+              </button>
+            </div>
+          </div>
+        </div> -->
+      </section>
+      <section class="new-comment">
+        <div class="__add-comment__container">
+          <textarea class="__add-comment__text-box" name="comment" id="new-comment" placeholder="Add a comment..."></textarea>
+          <div class="__comment__command">
+            <img class="__add-comment__avatar" src="./public/img/avatars/image-juliusomo.webp" alt="">
+            <button class="submit--btn" type="button">send</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  
+  <script src="./src/js/app.js"></script>
+</body>
+</html>
