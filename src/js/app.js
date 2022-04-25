@@ -12,6 +12,7 @@
 */
 
 
+
 /*1. Retrieva data from json file*/
 // Add event listener that will fetch json file once document is fully loaded
 document.addEventListener('DOMContentLoaded', displayComments);
@@ -23,14 +24,13 @@ function displayComments(e) {
 
 // 2. Store retrieved data from json file to a variable
 function loadData(json) {
-    console.log(json);
+    // console.log(json);
     // Current user data
     const currentUserAvatar = json.currentUser.image.webp;
     const currentUsername = json.currentUser.username;
 
     // Main comments
     const commentData = json.comments;
-
     commentData.forEach(function(data) {
         //  Other user's data
         // console.log(data);
@@ -44,24 +44,82 @@ function loadData(json) {
 
         // Instantiate each individual comment data(user data)
         const comment = new Comment(avatar, username, commentDate, commentContent, commentScore);
-        comment.postComment();
+        // comment.postComment();
         comment.showComment();
 
-        replies.forEach(reply => {
-            const avatar = reply.user.image.webp;
-            const username = reply.user.username;
-            const commentContent = reply.content;
-            const commentDate = reply.createdAt;
-            const commentScore = reply.score;
-            const userId = reply.id;
-            const replyTo = reply.replies;
+        if(replies.length !== 0) {
+            
+            for(const reply of replies) {
+                    const commentContainer = document.querySelector('#comments-section').getElementsByClassName('__comment-container');
+                    const replyTo = commentContainer[userId - 1];
+                    const replySection = document.createElement('div');
+                    
+                    replySection.setAttribute('class', 'comment-reply');
+                    replySection.setAttribute('id', 'reply-section');
+                    replyTo.appendChild(replySection);
 
-            // Instantiate each individual reply in a comment
-            const newReply = new Reply(avatar, username, commentDate, commentContent, commentScore);
-            // newReply.postComment();
-            // newReply.postReply();
-        })
+
+                    const repAvatar = reply.user.image.webp;
+                    const repUsername = reply.user.username;
+                    const repCommentContent = reply.content;
+                    const repCommentDate = reply.createdAt;
+                    const repCommentScore = reply.score;
+                    console.log(reply);
+                    
+                    
+               
+                // Instantiate each individual reply in a comment
+                const newReply = new Reply(repAvatar, repUsername, repCommentDate, repCommentContent, repCommentScore);
+                // newReply.postComment();
+                
+                newReply.showReply();
+                
+                // }
+            }
+        } 
     })
+
+    // commentData.forEach(function(data) {
+    //     //  Other user's data
+    //     // console.log(data);
+    //     // const avatar = data.user.image.webp;
+    //     // const username = data.user.username;
+    //     // const commentContent = data.content;
+    //     // const commentDate = data.createdAt;
+    //     // const commentScore = data.score;
+    //     const userId = data.id;
+    //     const replies = data.replies;
+
+    //     // console.log(replies);
+    //     // console.log(data);
+    //     if(replies.length > 0) {
+            
+    //         for(const reply of replies) {
+    //                 const commentContainer = document.querySelector('#comments-section').getElementsByClassName('__comment-container');
+    //                 const replyTo = commentContainer[userId - 1];
+    //                 const replySection = document.createElement('div');
+                    
+    //                 replySection.setAttribute('class', 'comment-reply');
+    //                 replySection.setAttribute('id', 'reply-section');
+    //                 replyTo.appendChild(replySection);
+
+
+    //                 const repAvatar = reply.user.image.webp;
+    //                 const repUsername = reply.user.username;
+    //                 const repCommentContent = reply.content;
+    //                 const repCommentDate = reply.createdAt;
+    //                 const repCommentScore = reply.score;
+    //                 console.log(reply);
+                    
+               
+    //             // Instantiate each individual reply in a comment
+    //             const newReply = new Reply(repAvatar, repUsername, repCommentDate, repCommentContent, repCommentScore);
+    //             // newReply.postComment();
+    //             newReply.showReply();
+    //             // }
+    //         }
+    //     }
+    // })
 }
 
 // Comment constructor for main comments
@@ -102,7 +160,6 @@ class Comment {
                             Reply
                         </button>
                     </div>
-                    <div class="comment-reply" id="reply-section"></div>
                 </div>
             </div>
         `
@@ -110,44 +167,95 @@ class Comment {
     }
 
     showComment() {
+        
         let commentSection = document.querySelector('#comments-section');
         commentSection.innerHTML = displayComment(this.postComment());
+        
     }
 }
 
 
 // // Reply constructor for replies under comments
-class Reply extends Comment {
-    constructor(avatar, username, date, commentContent, score){
-        super(avatar, username, date, commentContent, score);
+class Reply {
+    constructor(repAvatar, repUsername, repDate, repCommentContent, repCcore){
+        this.avatar = repAvatar;
+        this.username = repUsername;
+        this.date = repDate;
+        this.comment = repCommentContent;
+        this.score = repCcore;
     }
 
     postReply() {
+        const createComment = `
+            <div class="__comment-container">
+                <div class="__comment">
+                    <div class="__comment__info">
+                        <span class="__comment__avatar">
+                            <img src=${this.avatar} alt="User Avatar">
+                        </span>
+                        <span class="__comment__username">${this.username}</span>
+                        <span class="__comment__date">${this.date}</span>
+                    </div>
+                    <p class="__comment__content">${this.comment}</p>
+                    <div class="__comment__command">
+                        <div class="__command__vote--btn --btn">
+                            <button class="up-vote vote--btn">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                            <span class="vote-count">${this.score}</span>
+                            <button class="down-vote vote--btn">
+                                <i class="fa-solid fa-minus"></i>
+                            </button>
+                        </div>
+                        <button class="__command__reply--btn --btn">
+                            <i class="fa-solid fa-reply"></i>
+                            Reply
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `
+        
+        return createComment;
+    }
+
+    showReply() {
+        
         let replySection = document.querySelector('#reply-section');
-        replySection.innerHTML = displayComment(this.postComment());
+        replySection.innerHTML = displayReply(this.postReply());
+        
     }
 };
 
 // 4. Display tags on html page
+// Closure function for main comments
 const displayComment = (function(comment){
     // string counter variable
-    let createComment = '';
-    return function(comment) {
+    let count = '';
+    const commentCounter = function(comment) {
         // Append each comment to the string counter variable
-        return createComment += comment;
+        return count += comment;
     }
+
+    commentCounter.reset = () => count = '';
+    return commentCounter;
+})();
+
+// Closure function for replies in comment
+const displayReply = (function(comment){
+    // string counter variable
+    let count = '';
+    const replyCounter = function(comment) {
+        // Append each comment to the string counter variable
+        return count += comment;
+    }
+
+    replyCounter.reset = () => count = '';
+    return replyCounter;
 })();
 
 
 /**** CREATE DATA ****
-1. Retrieve data from json file
-   - user data
-     1.avatar
-     2.username
-     3.comments
-     4.comment date 
-     5.comment votes
-2. Store retrieved data from json file to a variable
-3. Create dynamic html tags and append data retrieved
-4. Display tags on html page
+1. Post new comments using current user
+2. Post new replies using current user
 */
