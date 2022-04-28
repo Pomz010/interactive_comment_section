@@ -118,7 +118,7 @@ class Comment {
                         <span class="__comment__date">${this.commentDate}</span>
                     </div>
                     <p class="__comment__content">${this.comment}</p>
-                    <div class="__comment__command">
+                    
                         <div class="__command__vote--btn --btn">
                             <button class="up-vote vote--btn">
                                 <i class="fa-solid fa-plus"></i>
@@ -132,7 +132,7 @@ class Comment {
                             <i class="fa-solid fa-reply"></i>
                             Reply
                         </button>
-                    </div>
+                   
                 </div>
             </div>
         `
