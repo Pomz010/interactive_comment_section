@@ -28,7 +28,8 @@ body {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     font-family: $font-family;
-    background-color: $neutral-4;
+    font-size: clamp(0.90rem, 2%, 1.25rem);
+    background-color: rgb(134, 74, 74);
     align-items: center;
     height: 100vh;
     color: $neutral-2;
@@ -37,6 +38,9 @@ body {
 .container {
     grid-column: 1 / span 4;
     padding: 1rem;
+    width: min(100vw, 768px);
+    min-width: 300px;
+    margin: 0 auto;
 
     .__comment,
     .new-comment {
@@ -63,7 +67,7 @@ body {
     .comment-reply {
         border-left: 2px solid $neutral-3;
         .__comment {
-            width: calc(100% - 1rem);
+            width: calc(100% - 7%);
             margin-left: auto;
         }
     }
@@ -71,6 +75,13 @@ body {
     img {
         width: 2rem;
         height: 2rem;
+    }
+
+    .reply-box {
+        position: fixed;
+        bottom: 0;
+        width: 100vw;
+        margin: 0 -1rem;
     }
 }
 
@@ -139,4 +150,8 @@ body {
             border-radius: 7px;
         }
     }
+}
+
+@media (min-width: 768px) {
+    
 }

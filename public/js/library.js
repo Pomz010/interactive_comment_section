@@ -1,0 +1,1 @@
+class Posts{get(e){return new Promise(((t,s)=>{fetch(e).then((e=>e.json())).then((e=>t(e))).catch((e=>s(e)))}))}}
