@@ -28,7 +28,7 @@ function displayComments(e) {
 
 // 2. Store retrieved data from json file to a variable
 function loadData(json) {
-    // console.log(json);
+    console.log(json);
     // Current user data
     const currentUserAvatarContainer = document.querySelector('#current-user__avatar');
     const avatarPng = json.currentUser.image.png;
@@ -76,10 +76,11 @@ function loadData(json) {
                     const repCommentContent = reply.content;
                     const repCommentDate = reply.createdAt;
                     const repCommentScore = reply.score;
+                    // console.log(reply)
                     
                
                 // Instantiate each individual reply in a comment
-                const newReply = new Reply(repAvatar, repUsername, repCommentDate, repCommentContent, repCommentScore);
+                const newReply = new Reply(repAvatar, repUsername, repCommentDate, repCommentContent, repCommentScore, commentContainer);
                 
                 // Make a method call for newReply object
                 // Method displays comment reply if found
@@ -97,12 +98,13 @@ function loadData(json) {
 
 // Comment constructor for main comments
 class Comment {
-    constructor(avatar, username, date, commentContent, score){
+    constructor(avatar, username, date, commentContent, score, commentContainer){
       this.avatar = avatar;
       this.username = username;
       this.commentDate = date;
       this.comment = commentContent;
       this.score = score;
+      this.commentContainer = commentContainer;
     }
 
     // 3. Create dynamic html tags and append data retrieved
@@ -128,7 +130,7 @@ class Comment {
                                 <i class="fa-solid fa-minus"></i>
                             </button>
                         </div>
-                        <button class="__command__reply--btn --btn">
+                        <button class="__command__reply--btn reply--btn --btn">
                             <i class="fa-solid fa-reply"></i>
                             Reply
                         </button>
@@ -147,6 +149,7 @@ class Comment {
     createReply() {
         const replyBtn = document.querySelectorAll('.__command__reply--btn');
         const commentBox = document.querySelector('.new-comment');
+        const selectedParent = document.querySelectorAll('.__comment-container');
 
         // Event listener for reply button
         replyBtn.forEach(btn => {
@@ -155,6 +158,22 @@ class Comment {
             function reply(e) {
                 if(e.target === btn && screen.width <= 768){
                     commentBox.classList.toggle('reply-box');
+                } else if(e.target === btn && screen.width > 768) {
+                    for(let i = 1; i != 3; i++) {
+                        const newReplyBox = commentBox.cloneNode(true);
+                        const parent = e.target.parentNode.parentNode;
+                        const selectedComment = e.target.parentNode.parentNode
+                        
+                        // console.log(parent.children);
+                        if(parent === selectedComment) {
+                            parent.insertBefore(newReplyBox, parent.children[i]);
+                            console.log(e.target.parentNode.parentNode);
+                            
+                        } else {
+                            // console.log(false);
+                            // parent.insertBefore(newReplyBox, parent.children[i])
+                        }
+                    }
                 }
             }
         })
@@ -174,8 +193,8 @@ class Comment {
 
 // Reply constructor for replies under comments
 class Reply extends Comment {
-    constructor(repAvatar, repUsername, repDate, repCommentContent, repCcore){
-        super(repAvatar, repUsername, repDate, repCommentContent, repCcore);
+    constructor(repAvatar, repUsername, repDate, repCommentContent, repCcore, commentContainer){
+        super(repAvatar, repUsername, repDate, repCommentContent, repCcore, commentContainer);
     }
 
     showReply() {
