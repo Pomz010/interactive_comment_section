@@ -28,7 +28,6 @@ function displayComments(e) {
 
 // 2. Store retrieved data from json file to a variable
 function loadData(json) {
-    console.log(json);
     // Current user data
     const currentUserAvatarContainer = document.querySelector('#current-user__avatar');
     const avatarPng = json.currentUser.image.png;
@@ -43,20 +42,18 @@ function loadData(json) {
 
     // Main comments
     const commentData = json.comments;
-    commentData.forEach(function(data) {
-        //  Other user's data
-        // console.log(data);
-        const avatar = data.user.image.webp;
-        const username = data.user.username;
-        const commentContent = data.content;
-        const commentDate = data.createdAt;
-        const commentScore = data.score;
-        const userId = data.id;
-        const replies = data.replies;
+    for(let i = 0; i !== commentData.length; i++) {
+         //  Other user's data
+        const avatar = commentData[i].user.image.webp;
+        const username = commentData[i].user.username;
+        const commentContent = commentData[i].content;
+        const commentDate = commentData[i].createdAt;
+        const commentScore = commentData[i].score;
+        const userId = commentData[i].id;
+        const replies = commentData[i].replies;
 
         // Instantiate each individual comment data(user data)
         const comment = new Comment(avatar, username, commentDate, commentContent, commentScore);
-        // comment.postComment();
         comment.showComment();
         comment.createReply();
 
@@ -76,7 +73,6 @@ function loadData(json) {
                     const repCommentContent = reply.content;
                     const repCommentDate = reply.createdAt;
                     const repCommentScore = reply.score;
-                    // console.log(reply)
                     
                
                 // Instantiate each individual reply in a comment
@@ -93,7 +89,7 @@ function loadData(json) {
                 newReply.reply();
             }
         }
-    })
+    }
 }
 
 // Comment constructor for main comments
@@ -152,31 +148,50 @@ class Comment {
         const selectedParent = document.querySelectorAll('.__comment-container');
 
         // Event listener for reply button
-        replyBtn.forEach(btn => {
-            const screenSize = screen.width;
-            btn.addEventListener('click', reply);
+        for(let i = 0; i !== replyBtn.length; i++ ) {
+            replyBtn[i].addEventListener('click', reply);
+            
             function reply(e) {
-                if(e.target === btn && screen.width <= 768){
+                const newReplyBox = commentBox.cloneNode(true);
+                newReplyBox.classList.add('replyBox');
+                newReplyBox.style.marginLeft = 'auto';
+                newReplyBox.style.width = '93%';
+                const parent = e.target.parentNode.parentNode;
+
+                if(e.target === replyBtn[i] && screen.width <= 768){
                     commentBox.classList.toggle('reply-box');
-                } else if(e.target === btn && screen.width > 768) {
-                    for(let i = 1; i != 3; i++) {
-                        const newReplyBox = commentBox.cloneNode(true);
-                        const parent = e.target.parentNode.parentNode;
-                        const selectedComment = e.target.parentNode.parentNode
-                        
-                        // console.log(parent.children);
-                        if(parent === selectedComment) {
-                            parent.insertBefore(newReplyBox, parent.children[i]);
-                            console.log(e.target.parentNode.parentNode);
-                            
-                        } else {
-                            // console.log(false);
-                            // parent.insertBefore(newReplyBox, parent.children[i])
+                } else if(e.target === replyBtn[i] && screen.width > 768) {
+                    const box = document.querySelectorAll('.replyBox');
+                    
+                    try {
+                        parent.insertBefore(newReplyBox, parent.children[1]);
+                        if(box.length !== 0) {
+                            console.log(box);
+                            box[i].remove();
                         }
+                    } catch (error) {
+                        return;
                     }
                 }
             }
-        })
+        }
+        // replyBtn.forEach(btn => {
+        //     const screenSize = screen.width;
+            
+        //     btn.addEventListener('click', reply);
+        //     function reply(e) {
+        //         const newReplyBox = commentBox.cloneNode(true);
+        //         const parent = e.target.parentNode.parentNode;
+
+        //         if(e.target === btn && screen.width <= 768){
+        //             commentBox.classList.toggle('reply-box');
+        //         } else if(e.target === btn && screen.width > 768) {
+        //             parent.insertBefore(newReplyBox, parent.children[1]);
+        //             console.log(e.target.parentNode.parentNode);
+        //             console.log(replyBtn.indexOf(btn));
+        //         }
+        //     }
+        // })
 
         window.addEventListener('scroll', removeReply);
         function removeReply(e) {
@@ -210,11 +225,11 @@ class Reply extends Comment {
 // 4. Display tags on html page
 // Closure function for main comments
 const displayComment = (function(comment){
-    // string counter variable
-    let count = '';
+    // Post counter variable
+    let postCount = '';
     const commentCounter = function(comment) {
         // Append each comment to the string counter variable
-        return count += comment;
+        return postCount += comment;
     }
 
     return commentCounter;
@@ -222,11 +237,11 @@ const displayComment = (function(comment){
 
 // Closure function for replies in comment
 const displayReply = (function(comment){
-    // string counter variable
-    let count = '';
+    // Reply counter variable
+    let replyCount = '';
     const replyCounter = function(comment) {
         // Append each comment to the string counter variable
-        return count += comment;
+        return replyCount += comment;
     }
 
     return replyCounter;
